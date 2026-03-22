@@ -1,0 +1,47 @@
+{
+  "title": "Website Accessibility Features",
+  "description": "Features designed to help people with hearing impairment and other accessibility needs",
+  "features": [
+    {
+      "name": "Font Size Adjustment",
+      "description": "Users can increase or decrease text size from 75% to 150% of normal size",
+      "how_to_use": "Click the accessibility button (♿) in the bottom-right corner and use the A+ and A- buttons",
+      "benefit": "Makes text easier to read for people with visual impairments"
+    },
+    {
+      "name": "Visual Indicators",
+      "description": "Shows visual cues for all audio and video content",
+      "how_to_use": "Enabled by default, can be toggled in accessibility settings",
+      "benefit": "Alerts users to multimedia content that may have audio"
+    },
+    {
+      "name": "High Contrast Mode",
+      "description": "Increases contrast between text and background for better readability",
+      "how_to_use": "Toggle in accessibility settings panel",
+      "benefit": "Helps people with visual impairments distinguish content"
+    },
+    {
+      "name": "Video Captions",
+      "description": "All ministry videos include captions and text descriptions",
+      "how_to_use": "Captions are automatically available on YouTube videos",
+      "benefit": "Makes video content accessible to people with hearing impairment"
+    },
+    {
+      "name": "Persistent Settings",
+      "description": "Accessibility preferences are saved and applied across all pages",
+      "how_to_use": "Settings are automatically remembered using browser localStorage",
+      "benefit": "Users don't need to reconfigure settings on each page visit"
+    }
+  ],
+  "technical_details": {
+    "implementation": "Vanilla JavaScript with CSS custom properties",
+    "storage": "localStorage for user preferences",
+    "compatibility": "Works on all modern browsers",
+    "responsive": "Accessibility panel adapts to mobile screens"
+  },
+  "contact": {
+    "developer": "Tuyishime Honore",
+    "email": "tuyishimehonore63@gmail.com",
+    "purpose": "Committed to making digital content accessible to everyone"
+  }
+}

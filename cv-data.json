@@ -1,0 +1,308 @@
+{
+  "personalInfo": {
+    "fullName": "TUYISHIME Honore",
+    "dateOfBirth": "28th February 2002",
+    "age": 22,
+    "gender": "Male",
+    "nationality": "Rwandan",
+    "maritalStatus": "Single",
+    "phone": "+250 791 684 429",
+    "email": "tuyishimehonore63@gmail.com",
+    "address": "Eastern Province, Nyagatare District, Matimba Sector, Kagitumba Cell, Rwanda",
+    "parents": {
+      "father": "KWITONDA Gaspard",
+      "mother": "MUKANKUNDIYE Philomene"
+    }
+  },
+  "education": [
+    {
+      "institution": "Promise Bible Centre",
+      "fieldOfStudy": "2-Year Program in Kinyarwanda Version Theology",
+      "period": "2025 - Present",
+      "status": "In Progress",
+      "courses": [
+        "Introduction to the Bible (Bibiliya)",
+        "Biblical Geography (Isi ya Bibiliya)",
+        "Pentateuch (Ibitabo by'amategeko)",
+        "History of Israel According to the Bible (Incamake y'amateka ya Israel)",
+        "The four gospels (Ubutumwa bwiza)",
+        "Christology (Kristo n'umurimo we)",
+        "History Books (Ibitabo by'amateka)",
+        "Acts (Ibyakozwe n'Intumwa)",
+        "Poetry books (Ibitabo by'ubwenge)",
+        "Soteriology (Agakiza)",
+        "Major prophets (Abahanuzi bakuru)",
+        "Minor prophets (Abahanuzi bato)",
+        "Salvation epistles of Paul (Inzandiko z'Agakiza)",
+        "The Pastoral epistles (Inzandiko za Gishumba)",
+        "Prison and Parousia Epistles (Inzandiko zo muri gereza)",
+        "Catholic Epistles and Hebrews Epistle (Inzandiko rusange)",
+        "Church History (Amateka y'itorero)",
+        "Revelation (Ibyahishuwe)",
+        "Pneumatology (Umwuka Wera n'umurimo we)",
+        "Non Christian Religions (Amadini atari aya gikristo)",
+        "Homiletics (Gutegura ikibwiriza)",
+        "Reconciliation (Gukemura amakimbirane)",
+        "Spiritual Formation (Gukura mu mwuka)",
+        "Eschatology (Ibihe bya nyuma no kugaruka kwa Yesu)",
+        "Evangelism (Ivugabutumwa)",
+        "Angeology (Inyigisho ku Bamalayika)",
+        "Christian Education (Ishyingirwa n'Umuryango)",
+        "Introduction to the Greek (Ikigiriki)",
+        "Introduction to Biblical Counseling (Ikiganiro mfashabugingo)",
+        "Harmatology (Inyigisho ku Cyaha)",
+        "Biblical Anthropology (Ubumenyi bw'umuntu)",
+        "Church and Development (Itorero n'Iterambere)",
+        "Introduction to the Hebrew (Igheburayo)",
+        "Missiology (Kujiyana ubutumwa)"
+      ]
+    },
+    {
+      "institution": "Africa Multination for Christ College",
+      "fieldOfStudy": "Foundational Certificate in Discipleship and Ministry",
+      "period": "2026 - Present",
+      "status": "In Progress",
+      "courses": [
+        "Bible Synthesis (1-3)",
+        "Prayer (Talking with God)",
+        "Doctrinal Foundations",
+        "Soteriology (The Doctrine of Salvation)",
+        "Practical Deliverance",
+        "Church History (ZAOGA F.I.F)",
+        "Effective Preaching",
+        "Counseling",
+        "Laws of Leadership",
+        "Kingdom of God",
+        "Holy Spirit (Pneumatology)",
+        "Life and Teachings of Christ",
+        "Child Evangelism",
+        "Character of God",
+        "Church Growth (Home Cell Groups)",
+        "Guidance Rules and Policy"
+      ]
+    },
+    {
+      "institution": "ULK (Kigali Independent University)",
+      "fieldOfStudy": "Bachelor of Education in Computer Science and Physics (CSP)",
+      "period": "2024 - Now",
+      "status": "In Progress"
+    },
+    {
+      "institution": "TTC De La Salle",
+      "fieldOfStudy": "Primary Teaching Residency Program",
+      "period": "2023 - 2024",
+      "award": "Certificate of Completion (Primary Teaching Residency Program)"
+    },
+    {
+      "institution": "TTC Matimba",
+      "fieldOfStudy": "Advanced Level Secondary School",
+      "period": "2020 - 2023",
+      "award": "A2 Diploma in Teaching (SME)"
+    },
+    {
+      "institution": "GS Kagitumba",
+      "fieldOfStudy": "Ordinary Level Secondary School",
+      "period": "2017 - 2019",
+      "award": "O-Level Certificate"
+    },
+    {
+      "institution": "GS Kagitumba",
+      "fieldOfStudy": "Primary Education",
+      "period": "2011 - 2016",
+      "award": "Primary Certificate"
+    }
+  ],
+  "professionalExperience": [
+    {
+      "position": "Teacher",
+      "institution": "Rukara Model School of Sciences and Mathematics",
+      "period": "September 2024 - Present",
+      "responsibilities": "Teaching STEM subjects and mentoring students",
+      "description": "Teacher at Rwanda's leading educational institution, specializing in science, technology, engineering, and mathematics education"
+    },
+    {
+      "position": "ICT Trainer",
+      "institution": "PISQUARE (Partnership in ICT) - Facilitated by Edify",
+      "period": "November 2025 - Present",
+      "description": "Training primary school teachers in ICT integration and digital literacy across private primary schools"
+    },
+    {
+      "position": "Teacher (Resident)",
+      "institution": "GS Gacurabwenge",
+      "period": "One year",
+      "subjects": ["Mathematics", "Science & Technology", "Languages", "Sports", "Social Studies"]
+    },
+    {
+      "position": "Teaching Intern",
+      "institution": "GS Kagitumba",
+      "period": "October - December 2022"
+    }
+  ],
+  "computerSkills": {
+    "officeTools": [
+      "Microsoft Word & Google Docs",
+      "Microsoft Excel & Google Sheets",
+      "Microsoft PowerPoint & Google Slides",
+      "Microsoft Access",
+      "Microsoft Paint"
+    ],
+    "programmingLanguages": [
+      "Scratch",
+      "Turtle Art",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "PHP",
+      "MySQL",
+      "jQuery",
+      "Laravel"
+    ],
+    "webDevelopment": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "Joomla",
+      "WordPress",
+      "PHP",
+      "MySQL",
+      "jQuery",
+      "Laravel",
+      "Bootstrap"
+    ],
+    "platforms": [
+      "Google Meet",
+      "Google Classroom",
+      "Microsoft Teams",
+      "YouTube",
+      "Google Forms"
+    ],
+    "educationalTools": [
+      "Kahoot",
+      "Quizlet",
+      "Khan Academy",
+      "Mentimeter",
+      "Plickers",
+      "GeoGebra",
+      "EduPuzzle",
+      "Flip Grid"
+    ],
+    "otherSkills": [
+      "XO Laptop programming for children",
+      "AI tools for teaching and video production",
+      "Image design",
+      "Video production",
+      "Certificate design",
+      "Flyer design",
+      "Printing and projection skills"
+    ]
+  },
+  "languages": [
+    {
+      "language": "English",
+      "speaking": "Excellent",
+      "listening": "Excellent",
+      "reading": "Excellent",
+      "writing": "Excellent"
+    },
+    {
+      "language": "Kinyarwanda",
+      "speaking": "Excellent",
+      "listening": "Excellent",
+      "reading": "Excellent",
+      "writing": "Excellent"
+    },
+    {
+      "language": "French",
+      "speaking": "Good",
+      "listening": "Good",
+      "reading": "Good",
+      "writing": "Good"
+    }
+  ],
+  "trainingsAndAwards": [
+    {
+      "title": "MCE Training",
+      "institution": "TTC (Year 3)",
+      "description": "Teacher training in modern pedagogical methods"
+    },
+    {
+      "title": "Primary Teaching Residency Program (PTRP)",
+      "institution": "TTC De La Salle",
+      "certificate": "Certificate of Completion",
+      "focus": ["Use of ICT", "Teaching Methodologies", "English Language"]
+    },
+    {
+      "title": "EdTech Integration Pilot Training",
+      "facilitator": "REB (Rwanda Education Board) and World Bank",
+      "description": "Training on integrating educational technology in classroom settings"
+    },
+    {
+      "title": "CPD-ITMS Training",
+      "facilitator": "UR_CE (University of Rwanda Centre of Excellence)",
+      "focus": "Use of ICT in Teaching and Pedagogy"
+    },
+    {
+      "title": "PISQUARE Trainer Certification",
+      "facilitator": "Edify",
+      "description": "Certified trainer for ICT integration in teaching methodology"
+    },
+    {
+      "title": "Microsoft Online Course",
+      "provider": "ALX (Formerly African Leadership Excellence)",
+      "type": "Short course training"
+    }
+  ],
+  "hobbiesAndInterests": [
+    "Reading books",
+    "Playing football",
+    "Listening to spiritual songs",
+    "Prayer and spiritual development",
+    "Preaching and evangelism",
+    "Technology and innovation in education"
+  ],
+  "referencePersons": [
+    {
+      "name": "Br. BIZIYAREMYE Ferdinand",
+      "profession": "Coordinator of Primary Teacher Residence Program",
+      "institution": "TTC De La Salle Byumba",
+      "contact": "+250 789 139 618"
+    },
+    {
+      "name": "MURWANYI Isaie",
+      "profession": "Principal",
+      "institution": "TTC Matimba",
+      "contact": "+250 785 368 119"
+    },
+    {
+      "name": "MANIRIHO ELDAD Willy",
+      "profession": "Director of Studies",
+      "institution": "GS Kagitumba",
+      "contact": "+250 782 463 210"
+    },
+    {
+      "name": "Dr. Barnabas Muyengwa",
+      "profession": "Principal",
+      "institution": "Rukara Model School of Sciences and Mathematics",
+      "contact": "+250 792 045 452"
+    },
+    {
+      "name": "Erick Iyamuremyi",
+      "profession": "Head of PISQUARE & DOS",
+      "institution": "Rukara Model School",
+      "contact": "+250 788 244 491"
+    }
+  ],
+  "summary": "Dedicated educator with expertise in Computer Science, Physics, and ICT integration. Passionate about transforming education in Rwanda through innovative technology. Teacher at Rukara Model School of Sciences and Mathematics, pursuing Bachelor's degree in Computer Science and Physics Education at ULK Gisenyi Campus. Certified ICT trainer empowering 100+ teachers with digital literacy through PISQUARE/Edify partnership. Strong background in web development, educational technology, and pedagogical innovation.",
+  "mission": "Transform education in Rwanda through innovative technology integration, empowering both teachers and students with the digital skills needed for a brighter future.",
+  "keyStrengths": [
+    "Education Technology Integration",
+    "ICT Training and Mentoring",
+    "Web Development (Full Stack)",
+    "STEM Education",
+    "Teaching METHODOLOGY",
+    "Digital Literacy Advocacy",
+    "Educational Innovation",
+    "Programming and Scripting",
+    "Teacher Professional Development"
+  ]
+}

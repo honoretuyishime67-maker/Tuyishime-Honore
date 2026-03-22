@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "honore-profile-web",
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/roles", "destination": "/roles.html" },
+    { "source": "/development", "destination": "/development.html" },
+    { "source": "/education", "destination": "/education.html" },
+    { "source": "/projects", "destination": "/projects.html" },
+    { "source": "/ministry", "destination": "/ministry.html" },
+    { "source": "/contact", "destination": "/contact.html" }
+  ]
+}
