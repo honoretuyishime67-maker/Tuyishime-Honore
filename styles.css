@@ -433,10 +433,10 @@ header::after {
     pointer-events: auto; /* Enable clicks when visible */
   }
 
-  /* Homepage specific: transparent menu to show background image as requested */
+  /* Homepage specific: fully transparent menu to show background image as requested */
   body.home .nav-links {
-    background: rgba(0, 0, 0, 0.7); /* Darker overlay but transparent enough to see image */
-    backdrop-filter: blur(8px); /* Modern frosted glass effect */
+    background: transparent !important;
+    backdrop-filter: none;
   }
 
   .nav-links a {
@@ -2758,7 +2758,7 @@ body.high-contrast select {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.95)); /* Maximum black overlay for ultimate text prominence */
   z-index: 0;
 }
-.home header > * {
+.home header > *:not(.nav) {
   position: relative;
   z-index: 10;
 }
