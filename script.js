@@ -56,6 +56,7 @@ function initMobileMenu() {
     navToggle.addEventListener('click', () => {
       navToggle.classList.toggle('active');
       navLinks.classList.toggle('active');
+      document.body.classList.toggle('nav-open');
     });
 
     // Close menu when clicking a link
@@ -63,6 +64,7 @@ function initMobileMenu() {
       link.addEventListener('click', () => {
         navToggle.classList.remove('active');
         navLinks.classList.remove('active');
+        document.body.classList.remove('nav-open');
       });
     });
   }

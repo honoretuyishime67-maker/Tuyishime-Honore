@@ -166,6 +166,10 @@ h6 {
   box-sizing: border-box;
 }
 
+body.nav-open {
+  overflow: hidden !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -409,35 +413,45 @@ header::after {
     left: 0;
     width: 100%;
     height: 100dvh;
-    background: #064e3b !important; /* Force solid color to prevent content bleeding */
+    background: #064e3b; /* Fallback */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 1.2rem;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     transform: translateX(100%);
-    z-index: 2000; /* Ensure it's above everything, including footer and hero */
-    padding: 3rem 1rem;
+    opacity: 0;
+    z-index: 5000; /* Extremely high to ensure clickability */
+    padding: 2rem 1rem;
     overflow-y: auto;
-    display: none; /* Hidden by default */
+    pointer-events: none; /* Block clicks when hidden */
   }
 
   .nav-links.active {
-    display: flex;
     transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto; /* Enable clicks when visible */
+  }
+
+  /* Homepage specific: transparent menu to show background image as requested */
+  body.home .nav-links {
+    background: rgba(0, 0, 0, 0.7); /* Darker overlay but transparent enough to see image */
+    backdrop-filter: blur(8px); /* Modern frosted glass effect */
   }
 
   .nav-links a {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 800;
     color: #fff !important;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     padding: 1.2rem;
     width: 100%;
+    max-width: 400px;
     text-align: center;
     text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    display: block;
   }
 
   .nav-links a:last-child {
