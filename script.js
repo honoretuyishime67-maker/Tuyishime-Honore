@@ -12,7 +12,8 @@ const GOOGLE_API_KEY = "AIzaSyBIqQ-gyjdKJ3x2n2iREYT6PoFnBl3-RqE";
 let chatState = {
   userRole: null, // 'teacher', 'student', 'collaborator', or null
   uploadedDocuments: [],
-  conversationLength: 0
+  conversationLength: 0,
+  chatHistory: [] // To store recent messages for context
 };
 
 // Prevent multiple initializations
@@ -46,6 +47,9 @@ function initChatSystem() {
 
   // Initialize mobile menu
   initMobileMenu();
+
+  // Initialize contact form for Supabase
+  initContactForm();
 }
 
 function initMobileMenu() {
@@ -283,16 +287,57 @@ function createBotMessage(text) {
   const messageWrapper = document.createElement('div');
   messageWrapper.className = 'ai-message-wrapper bot-wrapper';
 
-  // Remove thinking section from text completely
   const thinkingRegex = /---THINKING---([\s\S]*?)---END THINKING---/;
-  const answerText = text.replace(thinkingRegex, '').trim();
+  // The thinking block is used for model reasoning but hidden from the final UI
+  let cleanText = text.replace(thinkingRegex, '').trim();
 
-  // Create answer bubble
+  // 1. Create answer bubble
   const bubble = document.createElement('div');
   bubble.className = 'ai-message-bubble bot';
-  bubble.innerHTML = answerText;
+  
+  // Parse for buttons: ((BUTTON:Label:Action))
+  const buttonRegex = /\(\(BUTTON:(.*?):(.*?)\)\)/g;
+  const buttons = [];
+  let match;
+  while ((match = buttonRegex.exec(cleanText)) !== null) {
+    buttons.push({ label: match[1], action: match[2] });
+  }
+  
+  // Remove button syntax from text
+  const displayChatText = cleanText.replace(buttonRegex, '').trim();
+  bubble.innerHTML = displayChatText;
 
   messageWrapper.appendChild(bubble);
+
+  // 3. Add buttons if any
+  if (buttons.length > 0) {
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'ai-button-container';
+    buttonContainer.style.display = 'flex';
+    buttonContainer.style.gap = '0.5rem';
+    buttonContainer.style.marginTop = '0.5rem';
+    buttonContainer.style.flexWrap = 'wrap';
+
+    buttons.forEach(btn => {
+      const b = document.createElement('button');
+      b.className = 'btn btn-sm btn-outline';
+      b.style.fontSize = '0.85rem';
+      b.style.padding = '0.4rem 0.8rem';
+      b.textContent = btn.label;
+      b.onclick = () => {
+        if (btn.action.startsWith('http') || btn.action.endsWith('.pdf')) {
+          window.open(btn.action, '_blank');
+        } else if (btn.action.startsWith('/')) {
+            window.location.href = btn.action;
+        } else {
+          console.log('Action:', btn.action);
+        }
+      };
+      buttonContainer.appendChild(b);
+    });
+    messageWrapper.appendChild(buttonContainer);
+  }
+
   return messageWrapper;
 }
 
@@ -386,59 +431,36 @@ function getFallbackResponse(message) {
 
   const patterns = [
     {
-      test: /\b(hi|hello|hey|greetings|good morning|good afternoon|good evening|who are you|introduce|intro|about you|who is honore)\b/,
-      reply: `Hello there! It's so good to connect with you. I am Honore Tuyishime, Passionate Educator and ICT Trainer dedicated to transforming education through technology integration and pedagogical excellence in Rwanda. and I am dedicated to serving God and the community through transformational teaching, discipleship, and a heart-led commitment to service, as commissioned in the Holy Scriptures. I'm here to share my journey and expertise with you—how can I help you explore my work in education technology or my spiritual mission today? ${docs}`
+      test: /\b(hi|hello|hey|greetings|who are you|introduce|who is honore)\b/i,
+      reply: `Hello! I'm Honore Tuyishime, a professional educator and ICT trainer dedicated to transforming education in Rwanda. How can I assist you today? ((BUTTON:About Honore:about.html)) ((BUTTON:View Projects:projects.html))`
     },
     {
       test: /\b(education|study|studied|school|university|academic|background|learn)\b/i,
-      reply: `I have a comprehensive educational foundation that bridges pedagogy and technology:
-• **Primary Education (2011-2016):** GS Kagitumba (Primary School Certificate).
-• **Ordinary Level (2017-2019):** GS Kagitumba (O-Level Certificate).
-• **A2 Diploma (2020-2023):** TTC Matimba, focusing on Science & Mathematics Education (SME).
-• **Teaching Residency (2023-2024):** TTC De La Salle (Byumba), Primary Teaching Residency Program Pilot (PTRP) with international partners.
-• **University (2024-Present):** Kigali Independent University (ULK), currently pursuing a Bachelor's in Computer Science and Physics Education.
-
-Check the **Education** page for full details and to download my official certificates! ${docs}`
+      reply: `Honore has a strong academic background in STEM and Computer Science, currently studying at ULK. You can view his full timeline and download certificates on the Education page. ((BUTTON:View Education:education.html)) ((BUTTON:A2 Diploma:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))`
     },
     {
       test: /\b(cv|resume|background|experience|qualification|work history)\b/i,
-      reply: `I currently teach STEM subjects at Rukara Model School and serve as an ICT trainer with PISQUARE/Edify. My background is in Computer Science and Physics Education (ULK), and my primary focus is transforming education through technology. I've trained over 100 teachers in digital literacy so far! ${docs}`
+      reply: `He currently teaches at Rukara Model School and trains teachers at PISQUARE. You can download his full CV or explore his roles here: ((BUTTON:Download CV:document/Honore curriculum vitae.pdf)) ((BUTTON:View Experience:roles.html))`
     },
     {
       test: /\b(certificat|diploma|credential|training|qualification)\b/i,
-      reply: `I have built a strong professional profile through a wide range of specialized certifications. My academic journey began with my Primary Education and O-Level Certificates from GS Kagitumba, followed by an A2 Diploma in Science & Mathematics Education from TTC Matimba. I furthered my pedagogical expertise through the Primary Teaching Residency Program (PTRP) at TTC De La Salle, a premier pilot sponsored by Florida State University and Bridge2Rwanda. On the technical side, I am a Microsoft Certified Educator and hold an IBM AI Literacy Master credential, along with specialized training in AI Prompting from One Million Prompters. Additionally, I’ve completed EdTech Integration training with REB and the World Bank, and the CPD-ITMS program with the University of Rwanda's Centre of Excellence. I am also a certified PISQUARE Trainer through Edify, reflecting my commitment to official standards in both education and ICT. ${docs}`
+      reply: `Honore holds several prestigious credentials, including his A2 Diploma, PTRP Certificate, and IBM AI Literacy. Which one would you like to see? ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf)) ((BUTTON:PTRP Cert:Document/PTR P Certificate .pdf)) ((BUTTON:One Million Prompts:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf)) ((BUTTON:MCE Cert:Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))`
     },
     {
-      test: /\b(contact|email|phone|reach|connect)\b/,
-      reply: `You can reach me personally at +250 791 684 429 or tuyishimehonore63@gmail.com. I'm always open to discussing new educational projects or potential collaborations in ICT training! ${docs}`
+      test: /\b(contact|email|phone|reach|connect)\b/i,
+      reply: `You can reach Honore at +250 791 684 429 or tuyishimehonore63@gmail.com. Feel free to use the contact page as well! ((BUTTON:Contact Page:contact.html))`
     },
     {
-      test: /\b(ministry|church|god|scripture|verse|discipleship)\b/,
-      reply: `My life and service are grounded in Matthew 28:19 and Acts 1:8. I'm currently advancing my theological studies at Promise Bible Centre and AMCC. My heart's mission is to serve God through discipleship, youth education, and community empowerment. ${docs}`
+      test: /\b(ministry|church|god|scripture|verse|discipleship)\b/i,
+      reply: `Honore's life is grounded in Matthew 28:19 and Acts 1:8, focusing on discipleship and community transformation. ((BUTTON:Ministry Work:ministry.html))`
     },
     {
-      test: /\b(project|developer|tech|coding|web|app)\b/,
-      reply: `My development work spans from pedagogical web apps like the Digital Lesson Plan to tutorial-based ICT resources. I specialize in HTML, CSS, JavaScript, and Laravel, and I focus on building tools that solve real classroom challenges for teachers. ${docs}`
+      test: /\b(project|developer|tech|coding|web|app)\b/i,
+      reply: `Explore his pedagogical apps like the Digital Lesson Plan and his ICT Education Hub. ((BUTTON:View Projects:projects.html))`
     },
     {
-      test: /\b(language|speak|talk|english|kinyarwanda|french)\b/i,
-      reply: `I am fluent in English and Kinyarwanda, both at an excellent level for professional and personal communication. I also have a good command of French. This allows me to connect with a wide range of educators and partners! ${docs}`
-    },
-    {
-      test: /\b(hobby|hobbies|interest|free time|like to do)\b/i,
-      reply: `When I'm not in the classroom or coding, you'll find me reading the Bible, praying, or listening to gospel music. I also have a deep interest in cattle keeping and livestock management—it keeps me grounded and connected to my community. Of course, I'm always exploring new technologies too! ${docs}`
-    },
-    {
-      test: /\b(reference|referee|verify|supervisor|principal|dr barnabas|erick|ferdinand)\b/i,
-      reply: `I have a strong network of professional references including Dr. Barnabas Muyengwa (Principal of Rukara Model School), Erick Iyamuremyi (Head of PISQUARE), and Br. Ferdinand Biziyaremye (PTRP Coordinator). They can speak to my teaching performance, STEM leadership, and ICT training expertise! ${docs}`
-    },
-    {
-      test: /\b(location|address|where are you|nyagatare|kagitumba|matimba)\b/i,
-      reply: `I am based in the Eastern Province of Rwanda, specifically in Nyagatare District. I serve at Rukara Model School and coordinate my training programs from here. ${docs}`
-    },
-    {
-      test: /\b(thank you|thanks|amazing|awesome|wow|appreciate|helpful)\b/i,
-      reply: `It's truly my pleasure! I'm so glad I could help. Please let me know if there's anything else you'd like to dive into! ${docs}`
+      test: /\b(thank you|thanks|amazing|awesome|wow|helpful)\b/i,
+      reply: `You are very welcome! It's an honor to assist you. Is there anything else you'd like to explore in Honore's portfolio?`
     }
   ];
 
@@ -448,50 +470,91 @@ Check the **Education** page for full details and to download my official certif
     }
   }
 
-  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've carefully analyzed your message against my professional background. To provide you with the most real and specific information, could you share a bit more? For example, are you interested in my hands-on teaching strategies at Rukara, the technical architecture of my web projects, or the specifics of my ICT training programs for teachers? I'm here to provide honest, detailed insights. ${docs}`;
+  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've analyzed your request against Honore's portfolio database. I couldn't find a specific match, but I can tell you about his projects, education, or contact details. What would you like to see? ((BUTTON:View Projects:projects.html)) ((BUTTON:Download CV:document/Honore curriculum vitae.pdf))`;
 }
 
-// HONORE'S COMPLETE BACKGROUND CONTEXT
+// HONORE'S COMPLETE BACKGROUND CONTEXT (POWERFUL VERSION)
 const HONORE_CONTEXT = `
-I AM TUYISHIME HONORE - PROFILE ULTIMATE KNOWLEDGE BASE (Updated 2026)
+You are the official AI assistant of Tuyishime Honore's portfolio website.
+You represent Tuyishime Honore — a professional educator, ICT trainer, and education technology innovator in Rwanda.
+Your job is to assist visitors by answering questions, explaining projects, guiding navigation, and analyzing documents available on the platform.
 
-MISSION STATEMENT (Always use for introductions):
-"I am Honore Tuyishime, Passionate Educator and ICT Trainer dedicated to transforming education through technology integration and pedagogical excellence in Rwanda. and I am dedicated to serving God and the community through transformational teaching, discipleship, and a heart-led commitment to service, as commissioned in the Holy Scriptures."
+👤 IDENTITY & PERSONALITY
+- Speak professionally, clearly, and confidently.
+- Be friendly and helpful, not robotic.
+- Represent Honore’s expertise in:
+  * Education
+  * ICT Integration
+  * STEM teaching
+  * AI in education
+  * Christian ministry (when relevant)
 
-CORE IDENTITY:
-- 22-year-old Rwandan Educator (Born Feb 28, 2002).
-- STEM Educator at Rukara Model School of Sciences and Mathematics.
-- Senior ICT Trainer at PISQUARE/Edify.
-- Student at ULK (Computer Science & Physics Education).
+📚 KNOWLEDGE BASE
+PROFILE:
+- Name: Tuyishime Honore
+- Role: Teacher, ICT Trainer, Education Technology Advocate
+- Workplace: Rukara Model School of Sciences and Mathematics
+- ICT Trainer: PISQUARE (supported by Edify)
+- Student: ULK (Computer Science & Physics Education)
 
-PROFESSIONAL EXPERIENCE & IMPACT:
-- Rukara Model School (Sept 2024 - Present): Leading STEM instruction for 200+ elite students; Pedagogical Lead.
-- PISQUARE (Nov 2025 - Present): Trained 100+ primary school teachers in digital literacy and ICT integration.
-- Expertise in: 5Es Model, Blended Learning, Peer Observation, and Digital School Management.
-- Technical Skills: HTML5, CSS3, JavaScript, PHP, MySQL, Laravel, WordPress, GeoGebra, Scratch, MS Teams, Google Classroom.
+MISSION:
+- Transform education in Rwanda using technology.
 
-FULL CERTIFICATION RECORD:
-1. Primary Teaching Residency Program (PTRP) - National Residency (2023-2024) - Sponsored by FSU, Bridge2Rwanda, IEE.
-2. Microsoft Certified Educator (UNESCO Framework).
-3. IBM AI Literacy Master (Machine Ethics & Logic).
-4. REB & World Bank: EdTech Integration Pilot.
-5. University of Rwanda Centre of Excellence: CPD-ITMS (ICT in Pedagogy).
-6. One Million Prompts: Specialized AI Prompting.
-7. TTC Matimba: A2 Diploma in Science & Mathematics Education.
+EXPERIENCE:
+- Teaching 200+ STEM students.
+- Training 100+ teachers in ICT.
+- Leading CPD programs.
+- Managing digital learning systems.
 
-KEY PROJECTS:
-- Digital Lesson Plan (https://digital-lesson-plan.vercel.app/): Web app for streamlined teacher planning.
+EDUCATION:
+- Primary: GS Kagitumba (2011–2016)
+- O-Level: GS Kagitumba (2017–2019)
+- A2 SME: TTC Matimba (2020–2023)
+- PTRP: TTC De La Salle (2023–2024)
+- Degree: ULK (2024–Present)
+
+SKILLS:
+- Web: HTML, CSS, JS, PHP, Laravel
+- Tools: Google Classroom, MS Teams, Kahoot, GeoGebra
+- Expertise: AI tools, media production, LMS systems
+
+PROJECTS:
+- Digital Lesson Plan System: A web app for streamlined teacher planning.
 - ICT Education Hub (YouTube): Expert tutorials for digital transformation in classrooms.
 
-SPIRITUAL & MINISTRY CORE:
-- Commission: Matthew 28:19 and Acts 1:8.
-- Theological Studies: Promise Bible Centre (34 comprehensive courses) and Africa Multination for Christ College (Foundational Certificate).
-- Focus: Preaching, discipleship, and community empowerment.
+MINISTRY:
+- Based on Matthew 28:19 and Acts 1:8.
+- Focus: discipleship, teaching, transformation.
 
-PERSONAL LIFESTYLE:
-- Hobbies: Reading the Bible, Praying, listening to Gospel music, cattle keeping, and exploring new tech.
-- Location: Nyagatare, Eastern Province, Rwanda.
-- Contact: +250 791 684 429 | tuyishimehonore63@gmail.com
+🧠 INTELLIGENT BEHAVIOR
+- ALWAYS start your internal process with a thinking block for analysis:
+  ---THINKING---
+  Write your reasoning steps here (e.g., Identifying intent, Scanning portfolio for X, Formulating answer)
+  ---END THINKING---
+- Answer using portfolio data when possible.
+- If answer is not found:
+  Say: "I couldn't find that in Honore’s portfolio. Can you clarify?"
+
+📂 DOCUMENT & FILE HANDLING
+- You can offer files using the button syntax: ((BUTTON:Label:Path))
+- Available Files:
+  * CV: ((BUTTON:Download CV:document/Honore curriculum vitae.pdf))
+  * A2 Diploma (SME): ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf))
+  * PTRP Certificate: ((BUTTON:PTRP Certificate:Document/PTR P Certificate .pdf))
+  * One Million Prompts: ((BUTTON:Prompters Cert:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))
+  * Microsoft Certified Educator: ((BUTTON:MCE Certificate:Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))
+  * IBM AI Literacy: ((BUTTON:AI Literacy Cert:Certicifacates/Completion Certificate _ SkillsBuild_Accepting the “AI Literacy” Digital Credential.pdf))
+  * AI Impact Policy: ((BUTTON:AI Policy Cert:Certicifacates/260108_RECRUITMENT_2311140955_26_001.pdf))
+
+💬 CONVERSATION FEATURES
+- Maintain memory of conversation.
+- Use button syntax to suggest navigation:
+  * ((BUTTON:View Projects:projects.html))
+  * ((BUTTON:About Honore:about.html))
+  * ((BUTTON:Contact Me:contact.html))
+
+🎯 GOAL
+Make users feel like they are interacting with a real expert who fully understands Honore’s work, impact, and vision.
 `;
 
 // OpenAI API Key - User will set this
@@ -510,6 +573,12 @@ console.log('%c📝 To enable AI responses: Open console and paste:\nsetOpenAIKe
 console.log('%cThen chat will show real AI responses with thinking bubbles! 🧠', 'color: #4a584a; font-size: 12px;');
 
 async function getChatResponse(message) {
+  // Update local history
+  const userMsg = { role: 'user', content: message };
+  
+  // Keep history to last 10 messages for token efficiency
+  const history = [...chatState.chatHistory, userMsg].slice(-10);
+
   // TIER 1: OpenAI (if key is set via console)
   if (typeof OPENAI_API_KEY !== 'undefined' && OPENAI_API_KEY) {
     try {
@@ -523,14 +592,18 @@ async function getChatResponse(message) {
           model: 'gpt-4o-mini',
           messages: [
             { role: 'system', content: HONORE_CONTEXT },
-            { role: 'user', content: message }
+            ...history
           ]
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        return data.choices[0]?.message?.content || getFallbackResponse(message);
+        const botResponse = data.choices[0]?.message?.content || getFallbackResponse(message);
+        
+        // Save to history
+        chatState.chatHistory = [...history, { role: 'assistant', content: botResponse }].slice(-10);
+        return botResponse;
       }
     } catch (e) { console.error('OpenAI Error:', e); }
   }
@@ -539,27 +612,37 @@ async function getChatResponse(message) {
   if (typeof GOOGLE_API_KEY !== 'undefined' && GOOGLE_API_KEY) {
     try {
       const pageContext = typeof scanPageContent === 'function' ? scanPageContent() : '';
+      
+      // Convert history to Gemini format
+      const geminiHistory = history.map(m => ({
+        role: m.role === 'user' ? 'user' : 'model',
+        parts: [{ text: m.content }]
+      }));
+
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GOOGLE_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are Honore's AI Assistant. ${HONORE_CONTEXT}\nPage Context: ${pageContext}\nUser: ${message}`
-            }]
-          }]
+          system_instruction: { parts: [{ text: `You are Honore's AI Assistant. ${HONORE_CONTEXT}\nPage Context: ${pageContext}` }] },
+          contents: geminiHistory
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || getFallbackResponse(message);
+        const botResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || getFallbackResponse(message);
+        
+        // Save to history
+        chatState.chatHistory = [...history, { role: 'assistant', content: botResponse }].slice(-10);
+        return botResponse;
       }
     } catch (e) { console.error('Gemini Error:', e); }
   }
 
   // TIER 3: Local Fallback (100% reliable)
-  return getFallbackResponse(message);
+  const fallback = getFallbackResponse(message);
+  chatState.chatHistory = [...history, { role: 'assistant', content: fallback }].slice(-10);
+  return fallback;
 }
 
 function initChat() {
@@ -1102,4 +1185,59 @@ function loadAccessibilitySettings() {
   } catch (error) {
     console.warn('Error loading accessibility settings:', error);
   }
+}
+
+// ===== SUPABASE CONTACT FORM HANDLING =====
+
+function initContactForm() {
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('contact-status');
+
+  if (!contactForm || !contactStatus) return;
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+      created_at: new Date().toISOString()
+    };
+
+    // UI Feedback: Loading
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    contactStatus.textContent = '';
+    contactStatus.style.color = 'var(--cyan)';
+
+    try {
+      // Use the global supabase client from supabaseClient.js
+      const { error } = await supabase
+        .from('contacts')
+        .insert([data]);
+
+      if (error) throw error;
+
+      // Success
+      contactStatus.textContent = 'Message sent successfully! Thank you for reaching out.';
+      contactStatus.style.color = 'var(--green-dark)';
+      contactForm.reset();
+    } catch (error) {
+      console.error('Supabase error:', error);
+      contactStatus.textContent = 'Error sending message. Please try again later.';
+      contactStatus.style.color = '#ff4b2b'; // Red for error
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        contactStatus.textContent = '';
+      }, 5000);
+    }
+  });
 }
