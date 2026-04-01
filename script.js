@@ -5,6 +5,43 @@ const videos = [
   { id: 'jPFDwkthyaA' },
 ];
 
+/** 
+ * 📄 PDF.js Configuration for AI Document Analysis
+ * This allows the AI to "read" PDFs uploaded by visitors in real-time.
+ */
+const pdfjsLib = window['pdfjs-dist/build/pdf'];
+if (pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+/** 
+ * Utility to extract text from a PDF file
+ * Used to give the AI context about uploaded student reports, CVs, etc.
+ */
+async function extractTextFromPDF(file) {
+  if (!pdfjsLib) return "";
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = async () => {
+      try {
+        const typedarray = new Uint8Array(reader.result);
+        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+        let fullText = "";
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const content = await page.getTextContent();
+          fullText += content.items.map(item => item.str).join(" ") + "\n";
+        }
+        resolve(fullText);
+      } catch (err) {
+        console.error("PDF Extraction error:", err);
+        reject(err);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+}
+
 // USER PROVIDED GOOGLE API KEYS
 const GOOGLE_API_KEY = "AIzaSyBIqQ-gyjdKJ3x2n2iREYT6PoFnBl3-RqE";
 
@@ -613,6 +650,11 @@ async function getChatResponse(message) {
     try {
       const pageContext = typeof scanPageContent === 'function' ? scanPageContent() : '';
       
+      // Include uploaded documents in the prompt if any
+      const docContext = chatState.uploadedDocuments.length > 0 
+        ? `\n\n[UPLOADED DOCUMENTS CONTENT]\n${chatState.uploadedDocuments.map(d => `FILE: ${d.name}\nCONTENT: ${d.text}`).join('\n\n')}`
+        : "";
+
       // Convert history to Gemini format
       const geminiHistory = history.map(m => ({
         role: m.role === 'user' ? 'user' : 'model',
@@ -623,7 +665,7 @@ async function getChatResponse(message) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: `You are Honore's AI Assistant. ${HONORE_CONTEXT}\nPage Context: ${pageContext}` }] },
+          system_instruction: { parts: [{ text: `You are Honore's AI Assistant. ${HONORE_CONTEXT}\nPage Context: ${pageContext}${docContext}` }] },
           contents: geminiHistory
         })
       });
@@ -755,19 +797,42 @@ function initChat() {
   const fileInput = document.getElementById('ai-file');
   const fileStatus = document.getElementById('ai-file-status');
 
-  if (fileInput) {
-    fileInput.addEventListener('change', async () => {
-      const file = fileInput.files?.[0];
+  if (fileInput && fileStatus) {
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
       if (!file) return;
 
-      fileStatus.textContent = 'Analyzing document locally...';
+      fileStatus.textContent = `Analyzing ${file.name}... ⏳`;
+      fileStatus.style.color = 'var(--accent-blue)';
 
-      setTimeout(() => {
-        chatState.uploadedDocuments.push(file.name);
-        fileStatus.textContent = `✓ "${file.name}" loaded. I can now reference your document details!`;
-        appendChatMessageEnhanced(`I've scanned your document: "${file.name}". I'll keep its details in mind while we chat!`, 'bot');
-        fileInput.value = '';
-      }, 2000);
+      try {
+        let extractedText = "";
+        if (file.type === 'application/pdf') {
+          extractedText = await extractTextFromPDF(file);
+        } else if (file.type === 'text/plain') {
+          extractedText = await file.text();
+        } else {
+          throw new Error('Unsupported file type. Please upload PDF or TXT.');
+        }
+
+        // Save to AI memory
+        chatState.uploadedDocuments.push({
+          name: file.name,
+          text: extractedText,
+          timestamp: new Date()
+        });
+
+        fileStatus.textContent = `✓ ${file.name} analyzed! You can now ask Honore questions about it.`;
+        fileStatus.style.color = 'var(--green-medium)';
+
+        // Auto-greet about the file
+        appendChatMessageEnhanced(`I've scanned "${file.name}"! I've analyzed its content and am ready to discuss it with you. What would you like to know about it?`, 'bot');
+
+      } catch (error) {
+        console.error('File Analysis Error:', error);
+        fileStatus.textContent = `❌ Error analyzing file: ${error.message}`;
+        fileStatus.style.color = 'var(--brand-orange)';
+      }
     });
   }
 }
