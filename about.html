@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About | Tuyishime Honore</title>
   <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+<style>
+  .font-selector {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    font-family: var(--font);
+  }
+  .font-selector label {
+    margin-right: 0.4rem;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .font-selector label i {
+    margin-right: 0.2rem;
+    color: var(--text);
+    font-size: 1.2rem;
+  }
+  .font-selector select {
+    font-size: 1rem;
+    border: 1px solid var(--muted);
+    border-radius: 4px;
+    padding: 0.3rem;
+    background: #fff;
+    color: var(--text);
+  }
+</style>
 </head>
 <body>
   <header class="compact">
@@ -12,18 +43,123 @@
       <div class="nav-brand"><span class="cyan">TUYISHIME</span> <span class="orange">HONORE</span> <span class="white">PROFILE</span></div>
       <div class="nav-toggle" aria-label="Toggle Navigation"><span></span><span></span><span></span></div>
       <div class="nav-links">
-
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="roles.html">Roles</a>
-      <a href="development.html">Development</a>
-      <a href="education.html">Education</a>
-      <a href="projects.html">Projects</a>
-      <a href="ministry.html">Ministry</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="roles.html">Roles</a>
+        <a href="development.html">Development</a>
+        <a href="education.html">Education</a>
+        <a href="projects.html">Projects</a>
+        <a href="ministry.html">Ministry</a>
+        <a href="cv.html">CV</a>
       </div>
     </nav>
 
   </header>
+<div class="font-selector">
+  <label for="font-select"><i class="fa-solid fa-font"></i> Font:</label>
+  <select id="font-select">
+    <option value="'Arial', sans-serif">Arial</option>
+    <option value="'Times New Roman', serif">Times New Roman</option>
+    <option value="'Calibri', sans-serif">Calibri</option>
+    <option value="'Verdana', sans-serif">Verdana</option>
+    <option value="'Georgia', serif">Georgia</option>
+    <option value="'Tahoma', sans-serif">Tahoma</option>
+    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+    <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+    <option value="'Courier New', monospace">Courier New</option>
+    <option value="'Lucida Console', monospace">Lucida Console</option>
+    <option value="'Lucida Sans Unicode', sans-serif">Lucida Sans Unicode</option>
+    <option value="'Garamond', serif">Garamond</option>
+    <option value="'Bookman Old Style', serif">Bookman Old Style</option>
+    <option value="'Palatino Linotype', serif">Palatino Linotype</option>
+    <option value="'Impact', sans-serif">Impact</option>
+    <option value="'Segoe UI', sans-serif">Segoe UI</option>
+    <option value="'Segoe Print', sans-serif">Segoe Print</option>
+    <option value="'Segoe Script', cursive">Segoe Script</option>
+    <option value="'Franklin Gothic Medium', sans-serif">Franklin Gothic Medium</option>
+    <option value="'Century Gothic', sans-serif">Century Gothic</option>
+    <option value="'Century Schoolbook', serif">Century Schoolbook</option>
+    <option value="'Arial Black', sans-serif">Arial Black</option>
+    <option value="'Helvetica', sans-serif">Helvetica</option>
+    <option value="'Helvetica Neue', sans-serif">Helvetica Neue</option>
+    <option value="'Roboto', sans-serif">Roboto</option>
+    <option value="'Open Sans', sans-serif">Open Sans</option>
+    <option value="'Lato', sans-serif">Lato</option>
+    <option value="'Montserrat', sans-serif">Montserrat</option>
+    <option value="'Poppins', sans-serif">Poppins</option>
+    <option value="'Nunito', sans-serif">Nunito</option>
+    <option value="'Raleway', sans-serif">Raleway</option>
+    <option value="'Oswald', sans-serif">Oswald</option>
+    <option value="'Ubuntu', sans-serif">Ubuntu</option>
+    <option value="'Merriweather', serif">Merriweather</option>
+    <option value="'Playfair Display', serif">Playfair Display</option>
+    <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
+    <option value="'Source Serif Pro', serif">Source Serif Pro</option>
+    <option value="'PT Sans', sans-serif">PT Sans</option>
+    <option value="'PT Serif', serif">PT Serif</option>
+    <option value="'Fira Sans', sans-serif">Fira Sans</option>
+    <option value="'Fira Code', monospace">Fira Code</option>
+    <option value="'Droid Sans', sans-serif">Droid Sans</option>
+    <option value="'Droid Serif', serif">Droid Serif</option>
+    <option value="'Noto Sans', sans-serif">Noto Sans</option>
+    <option value="'Noto Serif', serif">Noto Serif</option>
+    <option value="'Josefin Sans', sans-serif">Josefin Sans</option>
+    <option value="'Quicksand', sans-serif">Quicksand</option>
+    <option value="'Rubik', sans-serif">Rubik</option>
+    <option value="'Cabin', sans-serif">Cabin</option>
+    <option value="'Work Sans', sans-serif">Work Sans</option>
+    <option value="'Titillium Web', sans-serif">Titillium Web</option>
+    <option value="'Inconsolata', monospace">Inconsolata</option>
+    <option value="'Arimo', sans-serif">Arimo</option>
+    <option value="'Anton', sans-serif">Anton</option>
+    <option value="'Barlow', sans-serif">Barlow</option>
+    <option value="'Manrope', sans-serif">Manrope</option>
+    <option value="'Inter', sans-serif">Inter</option>
+    <option value="'Mulish', sans-serif">Mulish</option>
+    <option value="'Heebo', sans-serif">Heebo</option>
+    <option value="'Karla', sans-serif">Karla</option>
+    <option value="'DM Sans', sans-serif">DM Sans</option>
+    <option value="'DM Serif Display', serif">DM Serif Display</option>
+    <option value="'DM Serif Text', serif">DM Serif Text</option>
+    <option value="'Abril Fatface', cursive">Abril Fatface</option>
+    <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+    <option value="'Cinzel', serif">Cinzel</option>
+    <option value="'Bodoni Moda', serif">Bodoni Moda</option>
+    <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+    <option value="'Libre Franklin', sans-serif">Libre Franklin</option>
+    <option value="'Lora', serif">Lora</option>
+    <option value="'Bitter', serif">Bitter</option>
+    <option value="'Slabo 27px', serif">Slabo 27px</option>
+    <option value="'Slabo 13px', serif">Slabo 13px</option>
+    <option value="'Exo', sans-serif">Exo</option>
+    <option value="'Exo 2', sans-serif">Exo 2</option>
+    <option value="'Assistant', sans-serif">Assistant</option>
+    <option value="'Oxygen', sans-serif">Oxygen</option>
+    <option value="'Yanone Kaffeesatz', sans-serif">Yanone Kaffeesatz</option>
+    <option value="'Rajdhani', sans-serif">Rajdhani</option>
+    <option value="'Orbitron', sans-serif">Orbitron</option>
+    <option value="'Audiowide', cursive">Audiowide</option>
+    <option value="'VT323', monospace">VT323</option>
+    <option value="'Press Start 2P', cursive">Press Start 2P</option>
+    <option value="'Zilla Slab', serif">Zilla Slab</option>
+    <option value="'Chivo', sans-serif">Chivo</option>
+    <option value="'PT Mono', monospace">PT Mono</option>
+    <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+    <option value="'IBM Plex Serif', serif">IBM Plex Serif</option>
+    <option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
+    <option value="'Overpass', sans-serif">Overpass</option>
+    <option value="'Signika', sans-serif">Signika</option>
+    <option value="'Signika Negative', sans-serif">Signika Negative</option>
+    <option value="'Tinos', serif">Tinos</option>
+    <option value="'Vollkorn', serif">Vollkorn</option>
+    <option value="'Cardo', serif">Cardo</option>
+    <option value="'Archivo', sans-serif">Archivo</option>
+    <option value="'Archivo Narrow', sans-serif">Archivo Narrow</option>
+    <option value="'Sora', sans-serif">Sora</option>
+    <option value="'Syne', sans-serif">Syne</option>
+    <option value="'Urbanist', sans-serif">Urbanist</option>
+  </select>
+</div>
 
   <main class="container" role="main">
     <section class="section" aria-labelledby="about-title">
@@ -139,6 +275,7 @@
             <li><a href="about.html">About Us</a></li>
             <li><a href="roles.html">Roles</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="cv.html">CV</a></li>
             <li><a href="contact.html">Contact Us</a></li>
           </ul>
         </div>

@@ -85,8 +85,31 @@ function initChatSystem() {
   // Initialize mobile menu
   initMobileMenu();
 
+  // Initialize font selector UI
+  initFontSelector();
+
   // Initialize contact form for Supabase
   initContactForm();
+
+  // Initialize preview button functionality for personal testimony
+  initPreview();
+}
+
+
+  // Initialize accessibility features
+  initAccessibilityFeatures();
+
+  // Initialize hero quotes rotation (Home Page only)
+  initHeroQuotes();
+
+  // Initialize chat functionality
+  initChat();
+
+  // Initialize mobile menu
+  initMobileMenu();
+
+  // Initialize font selector UI
+  initFontSelector();
 }
 
 function initMobileMenu() {
@@ -477,11 +500,11 @@ function getFallbackResponse(message) {
     },
     {
       test: /\b(cv|resume|background|experience|qualification|work history)\b/i,
-      reply: `He currently teaches at Rukara Model School and trains teachers at PISQUARE. You can download his full CV or explore his roles here: ((BUTTON:Download CV:document/Honore curriculum vitae.pdf)) ((BUTTON:View Experience:roles.html))`
+      reply: `He currently teaches at Rukara Model School and trains teachers at PISQUARE. You can view his interactive CV, certificates, and academic documents directly on the CV page, or download it: ((BUTTON:View CV Page:cv.html)) ((BUTTON:Download CV:Document/Honore curriculum vitae.pdf)) ((BUTTON:View Experience:roles.html))`
     },
     {
       test: /\b(certificat|diploma|credential|training|qualification)\b/i,
-      reply: `Honore holds several prestigious credentials, including his A2 Diploma, PTRP Certificate, and IBM AI Literacy. Which one would you like to see? ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf)) ((BUTTON:PTRP Cert:Document/PTR P Certificate .pdf)) ((BUTTON:One Million Prompts:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf)) ((BUTTON:MCE Cert:Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))`
+      reply: `Honore holds several prestigious credentials, including his A2 Diploma, PTRP Certificate, and IBM AI Literacy. You can view or download them on the CV page: ((BUTTON:View CV Page:cv.html)) ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf)) ((BUTTON:PTRP Cert:Document/PTR P Certificate .pdf)) ((BUTTON:MCE Cert:Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))`
     },
     {
       test: /\b(contact|email|phone|reach|connect)\b/i,
@@ -507,7 +530,7 @@ function getFallbackResponse(message) {
     }
   }
 
-  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've analyzed your request against Honore's portfolio database. I couldn't find a specific match, but I can tell you about his projects, education, or contact details. What would you like to see? ((BUTTON:View Projects:projects.html)) ((BUTTON:Download CV:document/Honore curriculum vitae.pdf))`;
+  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've analyzed your request against Honore's portfolio database. I couldn't find a specific match, but I can tell you about his projects, CV, education, or contact details. What would you like to see? ((BUTTON:View CV Page:cv.html)) ((BUTTON:View Projects:projects.html)) ((BUTTON:Download CV:Document/Honore curriculum vitae.pdf))`;
 }
 
 // HONORE'S COMPLETE BACKGROUND CONTEXT (POWERFUL VERSION)
@@ -575,7 +598,7 @@ MINISTRY:
 📂 DOCUMENT & FILE HANDLING
 - You can offer files using the button syntax: ((BUTTON:Label:Path))
 - Available Files:
-  * CV: ((BUTTON:Download CV:document/Honore curriculum vitae.pdf))
+  * CV: ((BUTTON:Download CV:Document/Honore curriculum vitae.pdf))
   * A2 Diploma (SME): ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf))
   * PTRP Certificate: ((BUTTON:PTRP Certificate:Document/PTR P Certificate .pdf))
   * One Million Prompts: ((BUTTON:Prompters Cert:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))
@@ -586,6 +609,7 @@ MINISTRY:
 💬 CONVERSATION FEATURES
 - Maintain memory of conversation.
 - Use button syntax to suggest navigation:
+  * ((BUTTON:View CV Page:cv.html))
   * ((BUTTON:View Projects:projects.html))
   * ((BUTTON:About Honore:about.html))
   * ((BUTTON:Contact Me:contact.html))
@@ -1139,8 +1163,26 @@ function setFontFamily(fontValue) {
   }
 }
 
-// Toggle visual indicators
-function toggleVisualIndicators() {
+function initFontSelector() {
+  const selector = document.getElementById('font-select');
+  if (!selector) return;
+  // Load saved font if any
+  const savedFont = localStorage.getItem('selectedFont');
+  if (savedFont) {
+    setFontFamily(savedFont);
+    selector.value = savedFont;
+  } else {
+    // Ensure selector reflects current font variable
+    const currentFont = getComputedStyle(document.documentElement).getPropertyValue('--font').trim();
+    if (currentFont) selector.value = currentFont;
+  }
+  selector.addEventListener('change', () => {
+    const fontVal = selector.value;
+    setFontFamily(fontVal);
+    localStorage.setItem('selectedFont', fontVal);
+  });
+}
+
   const toggle = document.getElementById('visual-indicators-toggle');
   if (toggle) {
     const enabled = toggle.checked;
