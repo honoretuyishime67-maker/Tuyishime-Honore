@@ -1,38 +1,42 @@
-{
-  "version": 2,
-  "name": "honore-profile-web",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/about",
-      "destination": "/about.html"
-    },
-    {
-      "source": "/roles",
-      "destination": "/roles.html"
-    },
-    {
-      "source": "/development",
-      "destination": "/development.html"
-    },
-    {
-      "source": "/education",
-      "destination": "/education.html"
-    },
-    {
-      "source": "/projects",
-      "destination": "/projects.html"
-    },
-    {
-      "source": "/ministry",
-      "destination": "/ministry.html"
-    },
-    {
-      "source": "/contact",
-      "destination": "/contact.html"
-    }
-  ]
+﻿{
+    "name":  "honore-profile-web",
+    "version":  2,
+    "rewrites":  [
+                     {
+                         "destination":  "/frontend/index.html",
+                         "source":  "/"
+                     },
+                     {
+                         "destination":  "/frontend/about.html",
+                         "source":  "/about"
+                     },
+                     {
+                         "destination":  "/frontend/roles.html",
+                         "source":  "/roles"
+                     },
+                     {
+                         "destination":  "/frontend/development.html",
+                         "source":  "/development"
+                     },
+                     {
+                         "destination":  "/frontend/education.html",
+                         "source":  "/education"
+                     },
+                     {
+                         "destination":  "/frontend/projects.html",
+                         "source":  "/projects"
+                     },
+                     {
+                         "destination":  "/frontend/ministry.html",
+                         "source":  "/ministry"
+                     },
+                     {
+                         "destination":  "/frontend/contact.html",
+                         "source":  "/contact"
+                     },
+                     {
+                         "destination":  "/frontend/cv.html",
+                         "source":  "/cv"
+                     }
+                 ]
 }
