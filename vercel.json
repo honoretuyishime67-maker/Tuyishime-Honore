@@ -1,42 +1,18 @@
-﻿{
+{
     "name":  "honore-profile-web",
     "version":  2,
-    "rewrites":  [
-                     {
-                         "destination":  "/frontend/index.html",
-                         "source":  "/"
-                     },
-                     {
-                         "destination":  "/frontend/about.html",
-                         "source":  "/about"
-                     },
-                     {
-                         "destination":  "/frontend/roles.html",
-                         "source":  "/roles"
-                     },
-                     {
-                         "destination":  "/frontend/development.html",
-                         "source":  "/development"
-                     },
-                     {
-                         "destination":  "/frontend/education.html",
-                         "source":  "/education"
-                     },
-                     {
-                         "destination":  "/frontend/projects.html",
-                         "source":  "/projects"
-                     },
-                     {
-                         "destination":  "/frontend/ministry.html",
-                         "source":  "/ministry"
-                     },
-                     {
-                         "destination":  "/frontend/contact.html",
-                         "source":  "/contact"
-                     },
-                     {
-                         "destination":  "/frontend/cv.html",
-                         "source":  "/cv"
-                     }
-                 ]
+  "rewrites": [
+    { "source": "/", "destination": "/frontend/index.html" },
+    { "source": "/about", "destination": "/frontend/about.html" },
+    { "source": "/roles", "destination": "/frontend/roles.html" },
+    { "source": "/development", "destination": "/frontend/development.html" },
+    { "source": "/education", "destination": "/frontend/education.html" },
+    { "source": "/projects", "destination": "/frontend/projects.html" },
+    { "source": "/ministry", "destination": "/frontend/ministry.html" },
+    { "source": "/contact", "destination": "/frontend/contact.html" },
+    { "source": "/cv", "destination": "/frontend/cv.html" },
+    { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" },
+    { "source": "/docs/(.*)", "destination": "/docs/$1" },
+    { "source": "/database/(.*)", "destination": "/database/$1" }
+  ]
 }

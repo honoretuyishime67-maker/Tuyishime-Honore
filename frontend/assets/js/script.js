@@ -85,31 +85,13 @@ function initChatSystem() {
   // Initialize mobile menu
   initMobileMenu();
 
-  // Initialize font selector UI
-  initFontSelector();
+
 
   // Initialize contact form for Supabase
   initContactForm();
 
   // Initialize preview button functionality for personal testimony
   initPreview();
-}
-
-
-  // Initialize accessibility features
-  initAccessibilityFeatures();
-
-  // Initialize hero quotes rotation (Home Page only)
-  initHeroQuotes();
-
-  // Initialize chat functionality
-  initChat();
-
-  // Initialize mobile menu
-  initMobileMenu();
-
-  // Initialize font selector UI
-  initFontSelector();
 }
 
 function initMobileMenu() {
@@ -530,7 +512,7 @@ function getFallbackResponse(message) {
     }
   }
 
-  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've analyzed your request against Honore's portfolio database. I couldn't find a specific match, but I can tell you about his projects, CV, education, or contact details. What would you like to see? ((BUTTON:View CV Page:cv.html)) ((BUTTON:View Projects:projects.html)) ((BUTTON:Download CV:Document/Honore curriculum vitae.pdf))`;
+  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've analyzed your request against Honore's portfolio database. I couldn't find a specific match, but I can tell you about his projects, CV, education, or contact details. What would you like to see? ((BUTTON:View CV Page:cv.html)) ((BUTTON:View Projects:projects.html)) ((BUTTON:Download CV:../docs/Document/Honore curriculum vitae.pdf))`;
 }
 
 // HONORE'S COMPLETE BACKGROUND CONTEXT (POWERFUL VERSION)
@@ -598,13 +580,13 @@ MINISTRY:
 📂 DOCUMENT & FILE HANDLING
 - You can offer files using the button syntax: ((BUTTON:Label:Path))
 - Available Files:
-  * CV: ((BUTTON:Download CV:Document/Honore curriculum vitae.pdf))
-  * A2 Diploma (SME): ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf))
-  * PTRP Certificate: ((BUTTON:PTRP Certificate:Document/PTR P Certificate .pdf))
-  * One Million Prompts: ((BUTTON:Prompters Cert:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))
-  * Microsoft Certified Educator: ((BUTTON:MCE Certificate:Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))
-  * IBM AI Literacy: ((BUTTON:AI Literacy Cert:Certicifacates/Completion Certificate _ SkillsBuild_Accepting the “AI Literacy” Digital Credential.pdf))
-  * AI Impact Policy: ((BUTTON:AI Policy Cert:Certicifacates/260108_RECRUITMENT_2311140955_26_001.pdf))
+  * CV: ((BUTTON:Download CV:../docs/Document/Honore curriculum vitae.pdf))
+  * A2 Diploma (SME): ((BUTTON:A2 Diploma:../docs/Document/A2 TTC _SME_CERTIFICATE .pdf))
+  * PTRP Certificate: ((BUTTON:PTRP Certificate:../docs/Document/PTR P Certificate .pdf))
+  * One Million Prompts: ((BUTTON:Prompters Cert:../docs/Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))
+  * Microsoft Certified Educator: ((BUTTON:MCE Certificate:../docs/Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))
+  * IBM AI Literacy: ((BUTTON:AI Literacy Cert:../docs/Certicifacates/Completion Certificate _ SkillsBuild_Accepting the AI Literacy Digital Credential.pdf))
+  * AI Impact Policy: ((BUTTON:AI Policy Cert:../docs/Certicifacates/260108_RECRUITMENT_2311140955_26_001.pdf))
 
 💬 CONVERSATION FEATURES
 - Maintain memory of conversation.
@@ -1163,25 +1145,7 @@ function setFontFamily(fontValue) {
   }
 }
 
-function initFontSelector() {
-  const selector = document.getElementById('font-select');
-  if (!selector) return;
-  // Load saved font if any
-  const savedFont = localStorage.getItem('selectedFont');
-  if (savedFont) {
-    setFontFamily(savedFont);
-    selector.value = savedFont;
-  } else {
-    // Ensure selector reflects current font variable
-    const currentFont = getComputedStyle(document.documentElement).getPropertyValue('--font').trim();
-    if (currentFont) selector.value = currentFont;
-  }
-  selector.addEventListener('change', () => {
-    const fontVal = selector.value;
-    setFontFamily(fontVal);
-    localStorage.setItem('selectedFont', fontVal);
-  });
-}
+function toggleVisualIndicators() {
 
   const toggle = document.getElementById('visual-indicators-toggle');
   if (toggle) {

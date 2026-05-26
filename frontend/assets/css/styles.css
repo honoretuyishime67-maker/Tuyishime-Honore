@@ -615,7 +615,9 @@ header::after {
   padding: 1rem 2.4rem;
   background: linear-gradient(135deg, var(--green-medium), var(--green-dark));
   color: #fff !important;
-  border-radius: 999px;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
   text-decoration: none;
   font-weight: 700;
   font-size: 1rem;
@@ -665,7 +667,7 @@ header::after {
   padding: 0.8rem 2rem;
   background: var(--green-medium);
   color: #fff;
-  border-radius: 999px;
+  border-radius: 2px;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2758,7 +2760,7 @@ body.high-contrast select {
 }
 .home header {
   position: relative;
-  background-image: url('Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg');
+  background-image: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg');
   background-size: cover;
   background-position: center -420px;
   padding-bottom: 5rem;
@@ -3351,21 +3353,72 @@ body.home .floating-avatar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-top: 4px solid var(--green-medium);
+  border: 1px solid rgba(0,0,0,0.05);
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 250px;
+}
+
+.doc-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.doc-card h3 {
+  color: var(--green-dark);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.doc-card h3 i {
+  color: var(--green-medium);
+  font-size: 1.2rem;
 }
 
 .doc-card-actions {
   display: flex;
-  gap: 0.8rem;
+  gap: 0.6rem;
   margin-top: auto;
-  padding-top: 1.2rem;
+  padding-top: 1.5rem;
 }
 
 .doc-card-actions .btn {
+  padding: 0.7rem 0.8rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 0; /* Strictly rectangular */
   flex: 1;
-  padding: 0.6rem 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.btn-view {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+.btn-view:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+.btn-download {
+  background: var(--green-medium) !important;
+  border: 1px solid var(--green-medium) !important;
+  color: #fff !important;
+}
+
+.btn-download:hover {
+  background: var(--green-dark) !important;
+  border-color: var(--green-dark) !important;
 }
 
 /* Badge styles */
