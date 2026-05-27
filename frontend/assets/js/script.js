@@ -1,4 +1,4 @@
-const videos = [
+﻿const videos = [
   { id: 'yvzLHXqcanQ' },
   { id: 'glsbQJfo4T8' },
   { id: '8_UyFSrQblc' },
@@ -59,14 +59,16 @@ if (window.honoreChatInitialized) {
 } else {
   window.honoreChatInitialized = true;
 
-  // Show startup message only once
-  console.log('%c🤖 HONORE AI CHAT READY', 'color: #228b22; font-size: 14px; font-weight: bold;');
-  console.log('%c📝 To enable AI responses: Open console and paste:', 'color: #666; font-size: 12px;');
-  console.log('%csetOpenAIKey("sk-proj-YOUR-KEY-HERE")', 'color: #007bff; font-size: 12px; font-weight: bold;');
-  console.log('%cThen chat will show real AI responses with thinking bubbles! 🧠', 'color: #666; font-size: 12px;');
+  document.addEventListener('DOMContentLoaded', () => {
+    // Show startup message only once
+    console.log('%c🤖 HONORE AI CHAT READY', 'color: #228b22; font-size: 14px; font-weight: bold;');
+    console.log('%c📝 To enable AI responses: Open console and paste:', 'color: #666; font-size: 12px;');
+    console.log('%csetOpenAIKey("sk-proj-YOUR-KEY-HERE")', 'color: #007bff; font-size: 12px; font-weight: bold;');
+    console.log('%cThen chat will show real AI responses with thinking bubbles! 🧠', 'color: #666; font-size: 12px;');
 
-  // Initialize chat functionality
-  initChatSystem();
+    // Initialize chat functionality
+    initChatSystem();
+  });
 }
 
 function initChatSystem() {
@@ -190,7 +192,7 @@ async function fetchTitle(videoId) {
       if (data.items && data.items.length > 0) {
         return data.items[0].snippet.title;
       }
-    } catch (error) {
+} catch (error) {
       console.error('YouTube Data API error:', error);
     }
   }
@@ -726,7 +728,7 @@ function initChat() {
   // Make toggle button use a small avatar when collapsed
   if (!toggle.querySelector('.ai-avatar-mini')) {
     const avatar = document.createElement('img');
-    avatar.src = 'profile.jpg';
+    avatar.src = 'assets/images/profile.jpg';
     avatar.alt = 'AI chat';
     avatar.className = 'ai-avatar-mini';
     avatar.role = 'button';
@@ -791,7 +793,7 @@ function initChat() {
 
       const response = await getChatResponse(value);
       appendChatMessageEnhanced(response, 'bot');
-    } catch (error) {
+} catch (error) {
       typingIndicator.remove();
       appendChatMessageEnhanced('Sorry, there was an error. Please try again.', 'bot');
     } finally {
@@ -834,7 +836,7 @@ function initChat() {
         // Auto-greet about the file
         appendChatMessageEnhanced(`I've scanned "${file.name}"! I've analyzed its content and am ready to discuss it with you. What would you like to know about it?`, 'bot');
 
-      } catch (error) {
+  } catch (error) {
         console.error('File Analysis Error:', error);
         fileStatus.textContent = `❌ Error analyzing file: ${error.message}`;
         fileStatus.style.color = 'var(--brand-orange)';
@@ -1039,12 +1041,20 @@ function createAccessibilityPanel() {
           </optgroup>
         </select>
       </div>
-      <div class="accessibility-section">
+            <div class="accessibility-section">
         <h4>Visual Aids</h4>
         <label class="toggle-label">
           <input type="checkbox" id="visual-indicators-toggle">
           <span class="toggle-slider"></span>
           Show visual cues for audio/video
+        </label>
+      </div>
+      <div class="accessibility-section">
+        <h4>Screen Reader</h4>
+        <label class="toggle-label">
+          <input type="checkbox" id="screen-reader-toggle">
+          <span class="toggle-slider"></span>
+          Enable Text-to-Speech
         </label>
       </div>
       <div class="accessibility-section">
@@ -1253,6 +1263,14 @@ function loadAccessibilitySettings() {
       const toggle = document.getElementById('high-contrast-toggle');
       if (toggle) toggle.checked = true;
     }
+    // Apply screen reader
+    if (parsed.screenReader) {
+      const toggle = document.getElementById('screen-reader-toggle');
+      if (toggle) {
+        toggle.checked = true;
+        toggleScreenReader();
+      }
+    }
   } catch (error) {
     console.warn('Error loading accessibility settings:', error);
   }
@@ -1297,7 +1315,7 @@ function initContactForm() {
       contactStatus.textContent = 'Message sent successfully! Thank you for reaching out.';
       contactStatus.style.color = 'var(--green-dark)';
       contactForm.reset();
-    } catch (error) {
+} catch (error) {
       console.error('Supabase error:', error);
       contactStatus.textContent = 'Error sending message. Please try again later.';
       contactStatus.style.color = '#ff4b2b'; // Red for error
@@ -1311,4 +1329,158 @@ function initContactForm() {
       }, 5000);
     }
   });
+}
+function initPreview() {
+  const modal = document.getElementById('cv-modal');
+  const iframe = document.getElementById('modal-iframe');
+  const modalTitle = document.getElementById('modal-title');
+  const closeBtn = document.getElementById('modal-close');
+  const previewButtons = document.querySelectorAll('.preview-btn');
+
+  if (!modal || !iframe || !modalTitle) return;
+
+  function openModal(filePath, titleText) { console.log('Opening:', filePath);
+    iframe.src = filePath;
+    modalTitle.textContent = titleText;
+    modal.style.display = 'flex';
+    setTimeout(() => {
+      modal.classList.add('active');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    setTimeout(() => {
+      modal.style.display = 'none';
+      iframe.src = '';
+    }, 300);
+    document.body.style.overflow = '';
+  }
+
+  previewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filePath = btn.getAttribute('data-file');
+      const docTitle = btn.getAttribute('data-title') || 'Document Preview';
+      openModal(filePath, docTitle);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+}
+// ===== SCREEN READER LOGIC =====
+let screenReaderEnabled = false;
+let screenReaderObserver = null;
+let availableVoices = [];
+
+// Pre-load voices for the male voice
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    availableVoices = window.speechSynthesis.getVoices();
+  };
+  // Fallback in case they are already loaded
+  availableVoices = window.speechSynthesis.getVoices();
+}
+
+function setMaleVoice(msg) {
+  if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
+  // Try to find a male English voice (David, Mark, Guy, Daniel, Matthew, etc)
+  const maleVoice = availableVoices.find(v => 
+    v.lang.startsWith('en') && 
+    (v.name.toLowerCase().includes('male') || 
+     v.name.toLowerCase().includes('david') || 
+     v.name.toLowerCase().includes('mark') || 
+     v.name.toLowerCase().includes('guy') || 
+     v.name.toLowerCase().includes('daniel') || 
+     v.name.toLowerCase().includes('matthew'))
+  );
+  if (maleVoice) {
+    msg.voice = maleVoice;
+  }
+}
+
+function toggleScreenReader() {
+  const toggle = document.getElementById('screen-reader-toggle');
+  screenReaderEnabled = toggle ? toggle.checked : false;
+  
+  if (screenReaderEnabled) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance('Screen reader enabled. Scroll the page or hover to listen.');
+      setMaleVoice(msg);
+      window.speechSynthesis.speak(msg);
+      
+      document.body.addEventListener('mouseover', screenReaderHoverHandler);
+      document.body.addEventListener('mouseout', screenReaderOutHandler);
+      setupScrollReader();
+    } else {
+      alert("Text-to-speech is not supported by your browser.");
+      if (toggle) toggle.checked = false;
+      screenReaderEnabled = false;
+    }
+  } else {
+    document.body.removeEventListener('mouseover', screenReaderHoverHandler);
+    document.body.removeEventListener('mouseout', screenReaderOutHandler);
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (screenReaderObserver) screenReaderObserver.disconnect();
+  }
+  
+  saveAccessibilitySettings();
+}
+
+function setupScrollReader() {
+  if (screenReaderObserver) screenReaderObserver.disconnect();
+  
+  // Create an Intersection Observer that triggers when elements become fully visible on screen
+  screenReaderObserver = new IntersectionObserver((entries) => {
+    if (!screenReaderEnabled) return;
+    
+    entries.forEach(entry => {
+       if (entry.isIntersecting && entry.target.innerText && entry.target.innerText.trim().length > 0) {
+          const msg = new SpeechSynthesisUtterance(entry.target.innerText.trim());
+          setMaleVoice(msg);
+          
+          msg.onstart = () => { if (entry.target.classList) entry.target.classList.add('reading-focus'); };
+          msg.onend = () => { if (entry.target.classList) entry.target.classList.remove('reading-focus'); };
+          msg.onerror = () => { if (entry.target.classList) entry.target.classList.remove('reading-focus'); };
+          
+          window.speechSynthesis.speak(msg);
+          
+          // Unobserve so it doesn't read again if they scroll up and down repeatedly
+          screenReaderObserver.unobserve(entry.target);
+       }
+    });
+  }, { threshold: 0.8, rootMargin: '0px 0px -15% 0px' });
+  
+  // Observe all paragraphs and headings that the user might scroll to
+  document.querySelectorAll('h1, h2, h3, h4, p').forEach(el => {
+     screenReaderObserver.observe(el);
+  });
+}
+
+function screenReaderHoverHandler(e) {
+  if (!screenReaderEnabled) return;
+  const target = e.target;
+  const tagsToRead = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI', 'A', 'BUTTON', 'SPAN', 'STRONG', 'SMALL'];
+  
+  if (tagsToRead.includes(target.tagName) && target.innerText && target.innerText.trim().length > 0) {
+    window.speechSynthesis.cancel();
+    const msg = new SpeechSynthesisUtterance(target.innerText.trim());
+    setMaleVoice(msg);
+    window.speechSynthesis.speak(msg);
+    if (target.classList) target.classList.add('reading-focus');
+    
+    // Stop the scroll observer from reading this element again since we hovered it
+    if (screenReaderObserver) screenReaderObserver.unobserve(target);
+  }
+}
+
+function screenReaderOutHandler(e) {
+  const target = e.target;
+  if (target.classList) target.classList.remove('reading-focus');
 }

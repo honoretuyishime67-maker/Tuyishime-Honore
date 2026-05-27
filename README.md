@@ -1,4 +1,4 @@
-# 🎓 Tuyishime Honore's Professional Portfolio
+﻿# 🎓 Tuyishime Honore's Professional Portfolio
 
 Welcome to the official repository for **Tuyishime Honore's Portfolio**. This project showcases the work of a passionate educator, ICT Trainer, and Education Technology Advocate based in Rwanda.
 
@@ -73,6 +73,13 @@ Professional Educator & ICT Trainer
 📍 Nyagatare, Rwanda  
 📧 tuyishimehonore63@gmail.com  
 📞 +250 791 684 429
+
+### Professional References
+- **Br. BIZIYAREMYE Ferdinand** (Coordinator of PTRP, TTC De La Salle Byumba): +250 789 139 618
+- **Dr. Barnabas Muyengwa** (Principal, Rukara Model School of Sciences & Maths): +250 792 045 452
+- **Erick Iyamuremyi** (Head of PISQUARE & DOS, Rukara Model School): +250 788 244 491
+- **MURWANYI Isaie** (Principal, TTC Matimba): +250 785 368 119
+- **MANIRIHO Eldad Willy** (Director of Studies, GS Kagitumba): +250 782 463 210
 
 ---
 
