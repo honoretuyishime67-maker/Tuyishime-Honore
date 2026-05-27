@@ -905,8 +905,13 @@ const quotes = [
   { text: "Salvation is found in no one else, for there is no other name under heaven given to mankind by which we must be saved.", author: "Acts 4:12" },
   { text: "For He rescued us from the domain of darkness, and transferred us to the kingdom of His beloved Son, in whom we have redemption, the forgiveness of sins.", author: "Colossians 1:13-14" },
   { text: "Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'", author: "John 14:6" },
-  { text: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.", author: "Romans 5:8" }
+  { text: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.", author: "Romans 5:8" },
+  { text: "But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth.", author: "Acts 1:8" },
+  { text: "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit.", author: "Matthew 28:19" }
 ];
+
+// Dynamically intermix/shuffle the quotes so education and biblical verses exchange randomly each time!
+quotes.sort(() => Math.random() - 0.5);
 
 const quoteText = document.getElementById('rotator-text');
 const quoteAuthor = document.getElementById('rotator-author');
