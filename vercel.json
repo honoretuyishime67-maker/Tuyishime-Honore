@@ -1,4 +1,4 @@
-{
+﻿{
     "name":  "honore-profile-web",
     "version":  2,
   "rewrites": [
@@ -13,6 +13,7 @@
     { "source": "/cv", "destination": "/frontend/cv.html" },
     { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" },
     { "source": "/docs/(.*)", "destination": "/docs/$1" },
-    { "source": "/database/(.*)", "destination": "/database/$1" }
+    { "source": "/database/(.*)", "destination": "/database/$1" },
+    { "source": "/(.*)\\.html", "destination": "/frontend/$1.html" }
   ]
 }
